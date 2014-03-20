@@ -1,0 +1,57 @@
+{CSSTemplate {
+  $classpath : "game.ShogunStyle"
+}}
+
+  {macro main()}
+
+.board {
+
+}
+
+.square {
+	width:50px;
+	height:50px;
+	border:1px solid #000;
+	float:left;
+}
+
+.highlight{
+  background:yellow !important;
+  cursor:pointer;
+}
+.selected{
+  background:#000 !important;
+}
+.clear {
+	clear:both;
+}
+
+.pawn {
+	cursor:pointer;
+}
+
+.tile {
+	width:40px;
+	height:40px;
+	margin:5px;
+	background:grey;
+	text-align:center;
+	line-height: 40px;
+	font-size:2em;
+}
+
+.red {
+	background:red;
+}
+
+.blue {
+	background:#1a61a9;
+	color:#fff;
+}
+.odd {
+	background:#eee;
+}
+
+  {/macro}
+
+{/CSSTemplate}
