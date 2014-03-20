@@ -5,7 +5,7 @@
 }}
 
   {macro main()}
-    {section {
+   {section {
                 macro :{
                   name:"turn",
                   scope:this,
@@ -49,7 +49,7 @@
     fn : this.move,
     scope : this,
     args : [x,y]}
-    /}{/if} class='square{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn && square.pawn.color==data.turn} pawn{/if}'>{call tile(square.pawn)/}</div>
+    /}{/if} class='square{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn} pawn{/if}'>{call tile(square.pawn)/}</div>
   {/macro}
 
   {macro tile(pawn)}
