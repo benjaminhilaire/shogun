@@ -28,9 +28,9 @@ Aria.classDefinition({
         					color="blue";
         				}
         				if (y>=4){
-        					number=(8-y);
+        					number=y-3;
         				} else {
-        					number=y+1;
+        					number=4-y;
         				}
         				if (red && y === 4){
         					king = true;

@@ -57,12 +57,12 @@
     fn : this.move,
     scope : this,
     args : [x,y]}
-    /}{/if} class='square{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn} pawn{/if}'>{call tile(square.pawn)/}</div>
+    /}{/if} class='square-box{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn} pawn{/if}'>{call tile(square.pawn)/}</div>
   {/macro}
 
   {macro tile(pawn)}
   {if pawn}
-    <div class='tile ${pawn.color}'>{if pawn}${pawn.number}{if pawn.king}K{/if}{/if}</div>
+    <div class='square-content ${pawn.color}'><div><span>{if pawn}${pawn.number}{if pawn.king}K{/if}{/if}</span></div></div>
   {/if}
   {/macro}
 

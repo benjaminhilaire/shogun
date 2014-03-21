@@ -49,7 +49,11 @@ Aria.tplScriptDefinition({
 					}
 					this.$json.setValue(this.data.board["x"+oldX]["y"+oldY],
 							"pawn",false);
-					pawn.number=(pawn.number%4)+1;
+					if (pawn.king){
+						pawn.number=(pawn.number%2)+1;
+					} else {
+						pawn.number=(pawn.number%4)+1;
+					}
 					this.$json.setValue(this.data.board["x"+targetX]["y"+targetY],
 							"pawn",pawn);
 					if (this.data.turn==="red"){
