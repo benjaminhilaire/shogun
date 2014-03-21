@@ -6,22 +6,13 @@
 
   {macro main()}
    {call header()/}
-   {section {
-                macro :{
-                  name:"turn",
-                  scope:this,
-                },
-                bindRefreshTo : [{
-                   inside : data,
-                    to : "turn",
-                }]
-    }/}
+   {call end()/}
     {call board()/}
     {call footer()/}
   {/macro}
 
   {macro board()}
-  <div class='board'>
+  <div class='board content'>
   {for var y = 0; y < 8; y++}
        {for var x = 0; x < 8; x++}
               {var square = data.board["x"+x]["y"+y]/}
@@ -71,14 +62,35 @@
   {/macro}
 
   {macro header()}
-      <h1>Shogun</h1>
+      <div class='content'><h1 style='text-align:center;'>Shogun</h1></div>
   {/macro}
 
   {macro footer()}
-    <div class='footer'>
+    <div class='content'>
     {call colorSection("red","right")/}
-    {call colorSection("blue")/}
+    {call colorSection("blue","left")/}
     </div>
+  {/macro}
+
+  {macro end()}
+    {@aria:Dialog {
+      title: "Winner",
+      contentMacro : "endContent",
+      movable : true,
+      visible : false,
+      width : 300,
+      height : 200,
+       bind : {
+          "visible" : {
+        inside : data,
+        to : "end",
+      }
+     }
+    }/}
+  {/macro}
+
+  {macro endContent()}
+       The winner is...${data.winner}. Congratulation !
   {/macro}
 
   {macro colorSection(color,float)}
@@ -88,16 +100,19 @@
                   scope:this,
                   args:[color]
                 },
-                cssClass:float,
+                cssClass:float+" score",
                 bindRefreshTo : [{
                    inside : data.score,
                     to : color
+                },{
+                   inside : data,
+                    to : "turn"
                 }]
     }/}
   {/macro}
 
   {macro score(color)}
-      ${color} : ${data.score[color]}
+      {if data.turn===color}<strong>{/if}${color}{if data.turn===color}</strong>{/if} : ${data.score[color]}
   {/macro}
 
 {/Template}

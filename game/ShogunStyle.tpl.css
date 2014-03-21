@@ -4,12 +4,15 @@
 
   {macro main()}
 
+.content {
+	 margin-left:15%;
+	 max-width:600px;
+	 width:70%;
+}
+
 .board {
  background:none;
- width:70%;
- margin-left:15%;
  border:1px solid #000;
- max-width:600px;
 }
 
 .highlight{
@@ -25,10 +28,6 @@
 
 .pawn {
   cursor:pointer;
-}
-
-.footer {
-  width:200px;
 }
 .square-box{
     position: relative;
@@ -77,6 +76,10 @@
 
 .right {
   float:right;
+}
+
+.score{
+  text-transform:uppercase;
 }
 
   {/macro}

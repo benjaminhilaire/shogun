@@ -45,6 +45,8 @@ Aria.tplScriptDefinition({
 						if (opponent.pawn.king){
 							this.$json.setValue(this.data,
 									"winner",this.data.turn);
+							this.$json.setValue(this.data,
+									"end",true);
 						}
 					}
 					this.$json.setValue(this.data.board["x"+oldX]["y"+oldY],
