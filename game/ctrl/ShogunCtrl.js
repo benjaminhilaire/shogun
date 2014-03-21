@@ -6,7 +6,7 @@ Aria.classDefinition({
     $prototype : {
         $publicInterfaceName : "game.ctrl.ShogunCtrlInterface",
         init : function (args, cb) {
-        	this._data={turn:"blue",board:{},selected:false};
+        	this._data={turn:"blue",board:{},selected:false,score:{red:0,blue:0},size:60};
         	var blue=false;
         	var red=false;
         	for (var x=0;x<8;x++){

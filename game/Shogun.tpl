@@ -5,6 +5,7 @@
 }}
 
   {macro main()}
+   {call header()/}
    {section {
                 macro :{
                   name:"turn",
@@ -15,7 +16,13 @@
                     to : "turn",
                 }]
     }/}
-    {for var y = 0; y < 8; y++}
+    {call board()/}
+    {call footer()/}
+  {/macro}
+
+  {macro board()}
+  <div class='board'>
+  {for var y = 0; y < 8; y++}
        {for var x = 0; x < 8; x++}
               {var square = data.board["x"+x]["y"+y]/}
               {section {
@@ -38,9 +45,10 @@
           {if x ==7}<div class='clear'></div>{/if}
       {/for}
     {/for}
+  </div>
   {/macro}
 
-  {macro square(square,x,y)}
+    {macro square(square,x,y)}
     <div {if square.pawn}{on click {
     fn : this.highlight,
     scope : this,
@@ -59,7 +67,37 @@
   {/macro}
 
   {macro turn()}
-      <h1>${data.turn} to play</h1>
+      <h2>Turn to ${data.turn}</h2>
+  {/macro}
+
+  {macro header()}
+      <h1>Shogun</h1>
+  {/macro}
+
+  {macro footer()}
+    <div class='footer'>
+    {call colorSection("red","right")/}
+    {call colorSection("blue")/}
+    </div>
+  {/macro}
+
+  {macro colorSection(color,float)}
+      {section {
+                macro :{
+                  name:"score",
+                  scope:this,
+                  args:[color]
+                },
+                cssClass:float,
+                bindRefreshTo : [{
+                   inside : data.score,
+                    to : color
+                }]
+    }/}
+  {/macro}
+
+  {macro score(color)}
+      ${color} : ${data.score[color]}
   {/macro}
 
 {/Template}

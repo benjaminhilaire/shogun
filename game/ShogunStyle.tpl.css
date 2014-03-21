@@ -4,15 +4,20 @@
 
   {macro main()}
 
-.board {
+  {var width=60/}
+  {var tile=(width*.85)/}
 
+.board {
+  background:grey;
+  width:${width*9.08}px;
 }
 
 .square {
-	width:50px;
-	height:50px;
-	border:1px solid #000;
-	float:left;
+  width:${width}px;
+  height:${width}px;
+  border:1px solid #000;
+  float:left;
+  margin:${width/20}px;
 }
 
 .highlight{
@@ -23,33 +28,41 @@
   background:#000 !important;
 }
 .clear {
-	clear:both;
+  clear:both;
 }
 
 .pawn {
-	cursor:pointer;
+  cursor:pointer;
+}
+
+.footer {
+  width:${width*9}px;
 }
 
 .tile {
-	width:40px;
-	height:40px;
-	margin:5px;
-	background:grey;
-	text-align:center;
-	line-height: 40px;
-	font-size:2em;
+  width:${tile}px;
+  height:${tile}px;
+  margin:${tile/10}px;
+  background:grey;
+  text-align:center;
+  line-height:${tile}px;
+  font-size:${tile/20}em;
 }
 
 .red {
-	background:red;
+  background:red;
 }
 
 .blue {
-	background:#1a61a9;
-	color:#fff;
+  background:#1a61a9;
+  color:#fff;
 }
 .odd {
-	background:#eee;
+  background:#eee;
+}
+
+.right {
+  float:right;
 }
 
   {/macro}

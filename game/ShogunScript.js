@@ -34,7 +34,19 @@ Aria.tplScriptDefinition({
 					var oldY = this.data.selected.y;
 					var pawn = this.data.selected.pawn;
 					this.unselect(oldX,oldY,this.data.selected.pawn);
-					//TODO : check pawn to be taken (if any)
+
+					var opponent = this.data.board["x"+targetX]["y"+targetY];
+					if (opponent.pawn){
+						var turn = this.data.turn;
+						var score = this.data.score[this.data.turn];
+						score++;
+						this.$json.setValue(this.data.score,turn,score);
+						console.log(score);
+						if (opponent.pawn.king){
+							this.$json.setValue(this.data,
+									"winner",this.data.turn);
+						}
+					}
 					this.$json.setValue(this.data.board["x"+oldX]["y"+oldY],
 							"pawn",false);
 					pawn.number=(pawn.number%4)+1;
@@ -83,14 +95,14 @@ Aria.tplScriptDefinition({
 					if (!vertical){
 						// Horizontal
 						if (forward){
-							for (i=currentX+1;i<=currentX+distance;i++){
+							for (var i=currentX+1;i<=currentX+distance;i++){
 								if (this.__isOccupied(i,currentY)){
 									return false;
 								}
 							}
 							finalX=currentX+realDistance;
 						} else {
-							for (i=currentX-1;i>=currentX-distance;i--){
+							for (var i=currentX-1;i>=currentX-distance;i--){
 								if (this.__isOccupied(i,currentY)){
 									return false;
 								}
@@ -101,14 +113,14 @@ Aria.tplScriptDefinition({
 					else {
 						// Vertical
 						if (forward){
-							for (i=currentY+1;i<=currentY+distance;i++){
+							for (var i=currentY+1;i<=currentY+distance;i++){
 								if (this.__isOccupied(currentX,i)){
 									return false;
 								}
 							}
 							finalY=currentY+realDistance;
 						} else {
-							for (i=currentY-1;i>=currentY-distance;i--){
+							for (var i=currentY-1;i>=currentY-distance;i--){
 								if (this.__isOccupied(currentX,i)){
 									return false;
 								}
