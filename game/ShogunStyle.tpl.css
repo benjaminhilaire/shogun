@@ -5,9 +5,9 @@
   {macro main()}
 
 .content {
-	 margin-left:15%;
-	 max-width:600px;
-	 width:70%;
+	 margin-left:5%;
+	 max-width:500px;
+	 width:90%;
 }
 
 .board {
@@ -38,7 +38,7 @@
 .square-box:before{
     content: "";
     display: block;
-    padding-top: 100%;
+    padding-top: 140%;
 }
 .square-content{
     position:  absolute;
@@ -50,28 +50,28 @@
 }
 .square-content div {
    display: table;
-   width: 80%;
-   height: 80%;
-   margin-left:10%;
-   margin-top:10%;
+   width: 90%;
+   height: 90%;
+   margin-left:5%;
+   margin-top:5%;
 }
 .square-content span {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    color: white;
     font-size:2em;
 }
 
 .square-content.red span  {
-  background:red;
+  color:red;
 }
 
 .square-content.blue span {
-  background:#1a61a9;
+  color:#1a61a9;
 }
+
 .odd {
-  background:#eee;
+  background:#F7F7F7;
 }
 
 .right {

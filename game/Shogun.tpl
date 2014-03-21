@@ -1,7 +1,7 @@
 {Template {
   $classpath: "game.Shogun",
   $css : ["game.ShogunStyle"],
-  $hasScript:true,
+  $hasScript:true
 }}
 
   {macro main()}
@@ -53,8 +53,12 @@
 
   {macro tile(pawn)}
   {if pawn}
-    <div class='square-content ${pawn.color}'><div><span>{if pawn}${pawn.number}{if pawn.king}K{/if}{/if}</span></div></div>
+    <div class='square-content ${pawn.color}'><div><span>{if pawn}{call pawn(pawn)/}{/if}</span></div></div>
   {/if}
+  {/macro}
+
+  {macro pawn(pawn)}
+    <img style='width:100%;' src='game/ressources/${pawn.number}${pawn.color}.svg' />{if pawn.king}K{/if}
   {/macro}
 
   {macro turn()}
