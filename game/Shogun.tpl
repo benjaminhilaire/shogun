@@ -67,7 +67,7 @@
   {/macro}
 
   {macro header()}
-      <div class='content'><h1 style='text-align:center;'>Shogun</h1></div>
+      <div class='content'><img style='display: block;margin-left: auto;margin-right: auto;width:100%' src='game/ressources/shogun.png' alt='Shogun' title='Shogun'></div>
   {/macro}
 
   {macro footer()}
