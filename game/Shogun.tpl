@@ -58,7 +58,8 @@
   {/macro}
 
   {macro pawn(pawn)}
-   {if pawn.king}<span class='kingmove'>${pawn.number}</span>{/if}<img style='width:100%;' src='game/ressources/${pawn.color}{if pawn.king}king{else/}${pawn.number}{/if}.svg' />
+   {if pawn.king}<span class='kingmove'>${pawn.number}</span>{/if}<img style='width:100%;' src='game/ressources/${pawn.color}{if pawn.king}king{else/}${pawn.number}{/if}.svg'
+   alt='${pawn.number} ${pawn.color} {if pawn.king}Shogun{/if}' title='${pawn.number} ${pawn.color} {if pawn.king}Shogun{/if}' />
   {/macro}
 
   {macro turn()}
