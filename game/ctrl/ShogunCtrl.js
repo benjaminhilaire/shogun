@@ -6,35 +6,35 @@ Aria.classDefinition({
     $prototype : {
         $publicInterfaceName : "game.ctrl.ShogunCtrlInterface",
         init : function (args, cb) {
-        	this._data={turn:"blue",board:{},selected:false,score:{red:0,blue:0},size:60};
+        	this._data={turn:"green",board:{},selected:false,score:{blue:0,green:0},size:60};
+        	var green=false;
         	var blue=false;
-        	var red=false;
         	for (var x=0;x<8;x++){
         		if (x===0){
-        			blue=true;
+        			green=true;
         		} else if (x===7){
-        			red=true;
+        			blue=true;
         		} else {
+        			green=false;
         			blue=false;
-        			red=false;
         		}
         		this._data.board["x"+x]={};
         		for (var y=0;y<8;y++){
         			var pawn = null;
-        			if (red || blue){
-        				var color="red";
+        			if (blue || green){
+        				var color="blue";
         				var king = false;
-        				if (blue){
-        					color="blue";
+        				if (green){
+        					color="green";
         				}
         				if (y>=4){
         					number=y-3;
         				} else {
         					number=4-y;
         				}
-        				if (red && y === 4){
+        				if (blue && y === 4){
         					king = true;
-        				} else if (blue && y === 3){
+        				} else if (green && y === 3){
         					king = true;
         				}
         				pawn = {color:color,number:number,king:king,moves:[]};

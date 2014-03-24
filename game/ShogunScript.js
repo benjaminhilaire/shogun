@@ -58,12 +58,12 @@ Aria.tplScriptDefinition({
 					}
 					this.$json.setValue(this.data.board["x"+targetX]["y"+targetY],
 							"pawn",pawn);
-					if (this.data.turn==="red"){
+					if (this.data.turn==="blue"){
 						this.$json.setValue(this.data,
-								"turn","blue");
+								"turn","green");
 					} else {
 						this.$json.setValue(this.data,
-								"turn","red");
+								"turn","blue");
 					}
 					this.data.selected=false;
 				},
@@ -137,15 +137,15 @@ Aria.tplScriptDefinition({
 					if (this.__isOutOfBond(finalX, finalY)){
 						return false;
 					}
-					var squareDest = this.data.board["x"+finalX]["y"+finalY];
+					var square = this.data.board["x"+finalX]["y"+finalY];
 					var shogun=false;
 					var foe=false;
-					if (squareDest.pawn){
-						if (squareDest.pawn.color===color){
+					if (square.pawn){
+						if (square.pawn.color===color){
 							return false;
 						} else {
 							foe=true;
-							if (squareDest.pawn.king){
+							if (square.pawn.king){
 								shogun=true;
 							}
 						}

@@ -6,7 +6,7 @@
 
 .content {
 	 margin-left:5%;
-	 max-width:500px;
+	 max-width:450px;
 	 width:90%;
 }
 
@@ -59,15 +59,14 @@
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    font-size:2em;
 }
 
-.square-content.red span  {
-  color:red;
-}
-
-.square-content.blue span {
+.square-content.blue span  {
   color:#1a61a9;
+}
+
+.square-content.green span {
+  color:green;
 }
 
 .odd {
@@ -80,6 +79,13 @@
 
 .score{
   text-transform:uppercase;
+}
+
+.kingmove {
+position: absolute;
+font-size: 1em;
+margin-left: 10px;
+margin-top: 3px;
 }
 
   {/macro}

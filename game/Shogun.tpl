@@ -58,7 +58,7 @@
   {/macro}
 
   {macro pawn(pawn)}
-    <img style='width:100%;' src='game/ressources/${pawn.number}${pawn.color}.svg' />{if pawn.king}K{/if}
+   {if pawn.king}<span class='kingmove'>${pawn.number}</span>{/if}<img style='width:100%;' src='game/ressources/${pawn.color}{if pawn.king}king{else/}${pawn.number}{/if}.svg' />
   {/macro}
 
   {macro turn()}
@@ -71,8 +71,8 @@
 
   {macro footer()}
     <div class='content'>
-    {call colorSection("red","right")/}
-    {call colorSection("blue","left")/}
+    {call colorSection("blue","right")/}
+    {call colorSection("green","left")/}
     </div>
   {/macro}
 
