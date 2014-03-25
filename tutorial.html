@@ -2,17 +2,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Shogun Web</title>
+<title>Shogun Web Tutorial</title>
 <meta name="keywords" content="Shogun" />
 <meta name="author" content="Benjamin Hilaire" />
 <meta name="robots" content="noindex,nofollow" />
 <link rel="shortcut icon" type="image/x-icon" href="game/ressources/shogun.ico">
+<link rel="stylesheet" href="game/ressources/font-awesome-4.0.3/css/font-awesome.min.css">
 <script>var Aria = {debug : true};</script>
 <script src="http://cdn.ariatemplates.com/atlatest.js?skin=flat&root=/shogun"></script>
 <script type="text/javascript">
+window.tutorial=true;
 var lang = "fr_FR";
 if (this.document.location.hash === "#GB"){
-	lang = "en_US";
+  lang = "en_US";
 }
 aria.core.environment.Environment.setLanguage(lang, {
     fn : function newLocaleLoaded(){

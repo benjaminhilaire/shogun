@@ -1,13 +1,28 @@
 {Template {
   $classpath: "game.Shogun",
   $css : ["game.ShogunStyle"],
-  $hasScript:true
+  $hasScript:true,
+  $res: {"res":"game.res.LocaleResources"},
 }}
 
   {macro main()}
    {call header()/}
    {call end()/}
     {call board()/}
+        {if data.tutorial}
+      {section {
+                macro :{
+                  name:"tutorial",
+                  scope:this,
+                  args:[data.tutorial]
+                },
+                cssClass:"tutorial content",
+                bindRefreshTo : [{
+                   inside : data.tutorial,
+                    to : "step",
+                }]
+      }/}
+    {/if}
     {call footer()/}
   {/macro}
 
@@ -117,7 +132,12 @@
   {/macro}
 
   {macro score(color)}
-      {if data.turn===color}<strong>{/if}${color}{if data.turn===color}</strong>{/if} : ${data.score[color]}
+      {if data.turn===color}<strong>{/if}${res.score[color]}{if data.turn===color}</strong>{/if} : ${data.score[color]}
+  {/macro}
+
+  {macro tutorial(tutorial)}
+      <div class='step'>{if tutorial.step > 1}<i class="fa fa-chevron-circle-left" {on click {fn : this.updateStep,scope : this,args : [-1]}/}></i>{/if}<span>${res.tutorial.step} ${tutorial.step}</span>{if tutorial.step < tutorial.nbstep}<i {on click {fn : this.updateStep,scope : this,args : [1]}/} class="fa fa-chevron-circle-right"></i>{/if}</div>
+      ${res.tutorial["step"+tutorial.step]}
   {/macro}
 
 {/Template}

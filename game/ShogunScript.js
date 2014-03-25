@@ -178,6 +178,11 @@ Aria.tplScriptDefinition({
 						return true;
 					}
 					return false;
+				},
+				updateStep:function(evt,args){
+					var oldStep = this.data.tutorial.step;
+					this.$json.setValue(this.data.tutorial,
+							"step", oldStep+args[0]);
 				}
 			}
 });
