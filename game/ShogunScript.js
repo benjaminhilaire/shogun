@@ -9,17 +9,18 @@ Aria.tplScriptDefinition({
 					var x=args[1];
 					var y=args[2];
 					var square=args[0];
-					var oldSelected=this.data.selected;
+					var data = this.__getCurrentData();
+					var oldSelected=data.selected;
 					if (oldSelected){
-						var oldSquare = this.data.board["x"+oldSelected.x]["y"+oldSelected.y];
+						var oldSquare = data.board["x"+oldSelected.x]["y"+oldSelected.y];
 						this.unselect(oldSelected.x,oldSelected.y,oldSquare.pawn);
 					}
 					if (oldSelected.x === x && oldSelected.y === y){
 						return;
 					}
-					this.data.selected={x:x,y:y,pawn:square.pawn};
-					if (square.pawn && square.pawn.color===this.data.turn){
-						this.$json.setValue(this.data.board["x"+x]["y"+y],
+					data.selected={x:x,y:y,pawn:square.pawn};
+					if (square.pawn && square.pawn.color===data.turn){
+						this.$json.setValue(data.board["x"+x]["y"+y],
 								"selected", true);
 						this.displayMove(square.pawn,x,y,square.pawn.number,true,true);
 						this.displayMove(square.pawn,x,y,square.pawn.number,true,false);
@@ -28,72 +29,80 @@ Aria.tplScriptDefinition({
 					}
 				},
 				move:function(evt,args){
+					var data = this.__getCurrentData();
+					if (data.isNew){
+						this.$json.setValue(data,
+								"isNew", false);
+					}
 					var targetX=args[0];
 					var targetY=args[1];
-					var oldX = this.data.selected.x;
-					var oldY = this.data.selected.y;
-					var pawn = this.data.selected.pawn;
-					this.unselect(oldX,oldY,this.data.selected.pawn);
+					var oldX = data.selected.x;
+					var oldY = data.selected.y;
+					var pawn = data.selected.pawn;
+					this.unselect(oldX,oldY,data.selected.pawn);
 
-					var opponent = this.data.board["x"+targetX]["y"+targetY];
+					var opponent = data.board["x"+targetX]["y"+targetY];
 					if (opponent.pawn){
-						var turn = this.data.turn;
-						var score = this.data.score[this.data.turn];
+						var turn = data.turn;
+						var score = data.score[data.turn];
 						score++;
-						this.$json.setValue(this.data.score,turn,score);
+						this.$json.setValue(data.score,turn,score);
 						console.log(score);
 						if (opponent.pawn.king){
-							this.$json.setValue(this.data,
-									"winner",this.data.turn);
-							this.$json.setValue(this.data,
+							this.$json.setValue(data,
+									"winner",data.turn);
+							this.$json.setValue(data,
 									"end",true);
 						}
 					}
-					this.$json.setValue(this.data.board["x"+oldX]["y"+oldY],
+					this.$json.setValue(data.board["x"+oldX]["y"+oldY],
 							"pawn",false);
 					if (pawn.king){
 						pawn.number=(pawn.number%2)+1;
 					} else {
 						pawn.number=(pawn.number%4)+1;
 					}
-					this.$json.setValue(this.data.board["x"+targetX]["y"+targetY],
+					this.$json.setValue(data.board["x"+targetX]["y"+targetY],
 							"pawn",pawn);
-					if (this.data.turn==="blue"){
-						this.$json.setValue(this.data,
+					if (data.turn==="blue"){
+						this.$json.setValue(data,
 								"turn","green");
 					} else {
-						this.$json.setValue(this.data,
+						this.$json.setValue(data,
 								"turn","blue");
 					}
-					this.data.selected=false;
+					data.selected=false;
 				},
 				unselectEvt:function(evt,args){
 					this.unselect(args[1],args[2],args[0]);
 				},
 				unselect:function(x,y,pawn){
-					if (this.data.selected){
-						this.$json.setValue(this.data.board["x"+x]["y"+y],
+					var data = this.__getCurrentData();
+					if (data.selected){
+						this.$json.setValue(data.board["x"+x]["y"+y],
 								"selected",false);
 						if (pawn && pawn.moves){
 							for (var i=0;i<pawn.moves.length;i++){
 								var move = pawn.moves[i];
-								this.$json.setValue(this.data.board["x"+move.x]["y"+move.y],
+								this.$json.setValue(data.board["x"+move.x]["y"+move.y],
 										"highlight",false);
 							}
 							pawn.moves=[];
 						}
-						this.data.selected=false;
+						data.selected=false;
 					}
 				},
 				displayMove:function(pawn,currentX,currentY,distance,forward,vertical){
-					var result = this.isMoveAllowed(pawn,currentX,currentY,distance,forward,vertical,this.data.turn);
+					var data = this.__getCurrentData();
+					var result = this.isMoveAllowed(pawn,currentX,currentY,distance,forward,vertical,data.turn);
 					if (result){
-						this.$json.setValue(this.data.board["x"+result.x]["y"+result.y],
+						this.$json.setValue(data.board["x"+result.x]["y"+result.y],
 								"highlight", true);
 						pawn.moves.push(result);
 					}
 				},
 				isMoveAllowed:function(pawn,currentX,currentY,distance,forward,vertical,color){
+					var data = this.__getCurrentData();
 					distance=distance-1;
 					var realDistance=distance+1;
 					var finalX=currentX;
@@ -137,7 +146,7 @@ Aria.tplScriptDefinition({
 					if (this.__isOutOfBond(finalX, finalY)){
 						return false;
 					}
-					var square = this.data.board["x"+finalX]["y"+finalY];
+					var square = data.board["x"+finalX]["y"+finalY];
 					var shogun=false;
 					var foe=false;
 					if (square.pawn){
@@ -169,20 +178,32 @@ Aria.tplScriptDefinition({
 				},
 				__isOccupied:function(x,y){
 					if (this.__isOutOfBond(x,y)){
-						//console.log("Out:"+x+","+y);
 						return true;
 					}
-					var square = this.data.board["x"+x]["y"+y];
+					var square = this.__getCurrentData().board["x"+x]["y"+y];
 					if (square.pawn){
-						//console.log("Taken:"+x+","+y);
 						return true;
 					}
 					return false;
 				},
 				updateStep:function(evt,args){
-					var oldStep = this.data.tutorial.step;
-					this.$json.setValue(this.data.tutorial,
+					var data = this.__getCurrentData();
+					var oldStep = data.tutorial.step;
+					this.$json.setValue(data.tutorial,
 							"step", oldStep+args[0]);
+				},
+				rotate:function(evt,args){
+					this.data.display.horizontalBoard=!this.data.display.horizontalBoard;
+					this.$refresh();
+				},
+				changeDisposition:function(evt,args){
+					if (this.__getCurrentData().isNew){
+						this.moduleCtrl.initialize({verticalGame:!this.data.display.verticalGame,horizontalBoard:this.data.display.horizontalBoard});
+						this.$refresh();
+					}
+				},
+				__getCurrentData:function(){
+					return this.data[this.data.mode];
 				}
 			}
 });

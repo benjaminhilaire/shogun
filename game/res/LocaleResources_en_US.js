@@ -1,7 +1,7 @@
 Aria.resourcesDefinition({
     $classpath : 'game.res.LocaleResources',
     $resources : {
-        "score" : {
+        "color" : {
             "green" : "green",
             "blue" : "blue"
         },
@@ -12,6 +12,17 @@ Aria.resourcesDefinition({
         	"step3" : "Third step.",
         	"step4" : "Fourth step.",
         	"step5" : "Fifth step."
+        },
+        "winner" : {
+        	"winnerIs":"The winner is",
+        	"congrats":"Congratulation",
+        	"title":"Victory"
+        },
+        "displayAction" : {
+        	"tilehorizontal":"Tile on horizontal",
+        	"tilevertical":"Tile on vertical",
+        	"boardhorizontal":"Rotate to horizontal",
+        	"boardvertical":"Rotate to vertical"
         }
     }
 });

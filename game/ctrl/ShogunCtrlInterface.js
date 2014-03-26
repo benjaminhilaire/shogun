@@ -3,7 +3,9 @@ Aria.interfaceDefinition({
     $extends : "aria.templates.IModuleCtrl",
 
     $interface : {
-
-
+    	initialize : {
+            $type : "Function",
+            $callbackParam : 1
+        }
     }
 });

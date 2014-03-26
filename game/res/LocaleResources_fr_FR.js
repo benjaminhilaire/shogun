@@ -1,7 +1,7 @@
 Aria.resourcesDefinition({
     $classpath : 'game.res.LocaleResources',
     $resources : {
-        "score" : {
+        "color" : {
             "green" : "vert",
             "blue" : "bleu"
         },
@@ -12,6 +12,17 @@ Aria.resourcesDefinition({
         	"step3" : "Troisieme etape.",
         	"step4" : "Quatrieme etape.",
         	"step5" : "Cinquieme etape."
+        },
+        "winner" : {
+        	"winnerIs":"Le gagnant est",
+        	"congrats":"F&eacute;licitation",
+        	"title":"Victoire"
+        },
+        "displayAction" : {
+        	"tilehorizontal":"Tuile &agrave; l&apos;horizontale",
+        	"tilevertical":"Tuile &agrave; la verticale",
+        	"boardhorizontal":"Tourner le plateau &agrave; l&apos;horizontal",
+        	"boardvertical":"Tourner le plateau &agrave; la verticale"
         }
     }
 });

@@ -8,7 +8,7 @@
   {macro main()}
    {call header()/}
    {call end()/}
-    {call board()/}
+    {call board(data[data.mode])/}
         {if data.tutorial}
       {section {
                 macro :{
@@ -23,14 +23,14 @@
                 }]
       }/}
     {/if}
-    {call footer()/}
+    {call footer(data[data.mode])/}
   {/macro}
 
-  {macro board()}
-  <div class='board content'>
+  {macro board(game)}
+  <div class='board content{if data.display.horizontalBoard}-rotated{/if}'>
   {for var y = 0; y < 8; y++}
        {for var x = 0; x < 8; x++}
-              {var square = data.board["x"+x]["y"+y]/}
+              {var square = game.board["x"+x]["y"+y]/}
               {section {
                 macro :{
                   name:"square",
@@ -38,13 +38,13 @@
                   scope:this,
                 },
                 bindRefreshTo : [{
-                   inside : data.board["x"+x]["y"+y],
+                   inside : square,
                     to : "highlight",
                 },{
-                   inside : data.board["x"+x]["y"+y],
+                   inside : square,
                     to : "selected",
                 },{
-                   inside : data.board["x"+x]["y"+y],
+                   inside : game.board["x"+x]["y"+y],
                     to : "pawn",
                 }]
              }/}
@@ -63,7 +63,7 @@
     fn : this.move,
     scope : this,
     args : [x,y]}
-    /}{/if} class='square-box{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn} pawn{/if}'>{call tile(square.pawn)/}</div>
+    /}{/if} class='square-box{if data.display.horizontalBoard}-rotated{/if}{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn} pawn{/if}'>{call tile(square.pawn)/}</div>
   {/macro}
 
   {macro tile(pawn)}
@@ -73,36 +73,42 @@
   {/macro}
 
   {macro pawn(pawn)}
-   {if pawn.king}<span class='kingmove'>${pawn.number}</span>{/if}<img style='width:100%;' src='game/ressources/${pawn.color}{if pawn.king}king{else/}${pawn.number}{/if}.svg'
+   {if pawn.king}<span class='kingmove'>${pawn.number}</span>{/if}<img style='width:100%;' src='game/ressources/{if data.display.horizontalBoard}hori{else/}vert{/if}/${pawn.color}/${pawn.color}{if pawn.king}king{else/}${pawn.number}{/if}{if data.display.horizontalBoard}-hor{/if}.svg'
    alt='${pawn.number} ${pawn.color} {if pawn.king}Shogun{/if}' title='${pawn.number} ${pawn.color} {if pawn.king}Shogun{/if}' />
   {/macro}
 
-  {macro turn()}
-      <h2>Turn to ${data.turn}</h2>
-  {/macro}
-
   {macro header()}
-      <div class='content'><img style='display: block;margin-left: auto;margin-right: auto;width:100%' src='game/ressources/shogun.png' alt='Shogun' title='Shogun'></div>
+      <div class='content{if data.display.horizontalBoard}-rotated{/if}'><img style='display: block;margin-left: auto;margin-right: auto;width:{if data.display.horizontalBoard}30{else/}100{/if}%' src='game/ressources/shogun.png' alt='Shogun' title='Shogun'></div>
   {/macro}
 
-  {macro footer()}
-    <div class='content'>
-    {call colorSection("blue","right")/}
-    {call colorSection("green","left")/}
+  {macro footer(game)}
+    <div class='content{if data.display.horizontalBoard}-rotated{/if}'>
+    {call colorSection(game,"blue","right")/}<i alt='{if data.display.horizontalBoard}${res.displayAction.boardhorizontal}{else /}${res.displayAction.boardvertical}{/if}' title='{if data.display.horizontalBoard}${res.displayAction.boardhorizontal}{else /}${res.displayAction.boardvertical}{/if}' style='cursor:pointer' class="fa fa-{if data.display.horizontalBoard}undo{else /}repeat{/if}" {on click rotate/}></i>
+    {call colorSection(game,"green","left")/} {section {
+                macro : {
+                  name:"switchDisposition",
+                  args:[game],
+                  scope:this,
+                },
+                bindRefreshTo : [{
+                   inside : game,
+                    to : "isNew"
+                }]
+    }/}
     </div>
   {/macro}
 
   {macro end()}
     {@aria:Dialog {
-      title: "Winner",
-      contentMacro : "endContent",
+      title: res.winner.title+" !",
+      macro : "endContent",
       movable : true,
       visible : false,
       width : 300,
       height : 200,
        bind : {
           "visible" : {
-        inside : data,
+        inside : data[data.mode],
         to : "end",
       }
      }
@@ -110,34 +116,38 @@
   {/macro}
 
   {macro endContent()}
-       The winner is...${data.winner}. Congratulation !
+      ${res.winner.winnerIs}...${res.color[data[data.mode].winner]}. ${res.winner.congrats} !
   {/macro}
 
-  {macro colorSection(color,float)}
+  {macro colorSection(game,color,float)}
       {section {
                 macro :{
                   name:"score",
                   scope:this,
-                  args:[color]
+                  args:[game,color]
                 },
                 cssClass:float+" score",
                 bindRefreshTo : [{
-                   inside : data.score,
+                   inside : game,
                     to : color
                 },{
-                   inside : data,
+                   inside : game,
                     to : "turn"
                 }]
     }/}
   {/macro}
 
-  {macro score(color)}
-      {if data.turn===color}<strong>{/if}${res.score[color]}{if data.turn===color}</strong>{/if} : ${data.score[color]}
+  {macro score(game,color)}
+      {if game.turn===color}<strong>{/if}${res.color[color]}{if game.turn===color}</strong>{/if} : ${game.score[color]}
   {/macro}
 
   {macro tutorial(tutorial)}
       <div class='step'>{if tutorial.step > 1}<i class="fa fa-chevron-circle-left" {on click {fn : this.updateStep,scope : this,args : [-1]}/}></i>{/if}<span>${res.tutorial.step} ${tutorial.step}</span>{if tutorial.step < tutorial.nbstep}<i {on click {fn : this.updateStep,scope : this,args : [1]}/} class="fa fa-chevron-circle-right"></i>{/if}</div>
       ${res.tutorial["step"+tutorial.step]}
+  {/macro}
+
+  {macro switchDisposition(game)}
+      {if game.isNew}<i alt='{if data.display.verticalGame}${res.displayAction.tilehorizontal}{else /}${res.displayAction.tilevertical}{/if}' title='{if data.display.verticalGame}${res.displayAction.tilehorizontal}{else /}${res.displayAction.tilevertical}{/if}' style='cursor:pointer' class="fa fa-retweet" {on click changeDisposition/}></i>{/if}
   {/macro}
 
 {/Template}
