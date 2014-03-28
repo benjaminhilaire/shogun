@@ -1,6 +1,6 @@
 {Template {
   $classpath: "game.Shogun",
-  $css : ["game.ShogunStyle"],
+  $css : ["game.css.ShogunStyle","game.css.PawnStyle","game.css.MediaStyle"],
   $hasScript:true,
   $res: {"res":"game.res.LocaleResources"},
 }}
@@ -27,7 +27,7 @@
   {/macro}
 
   {macro board(game)}
-  <div class='board content{if data.display.horizontalBoard}-rotated{/if}'>
+  <div class='board content{if data.display.horizontalBoard} rotated{/if}'>
   {for var y = 0; y < 8; y++}
        {for var x = 0; x < 8; x++}
               {var square = game.board["x"+x]["y"+y]/}
@@ -63,26 +63,25 @@
     fn : this.move,
     scope : this,
     args : [x,y]}
-    /}{/if} class='square-box{if data.display.horizontalBoard}-rotated{/if}{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn} pawn{/if}'>{call tile(square.pawn)/}</div>
+    /}{/if} class='square-box{if data.display.horizontalBoard} rotated{/if}{if square.odd} odd{/if}{if square.highlight} highlight{/if}{if square.selected} selected{/if}{if square.pawn} pawn-tile{/if}'>{call tile(square.pawn)/}</div>
   {/macro}
 
   {macro tile(pawn)}
   {if pawn}
-    <div class='square-content ${pawn.color}'><div><span>{if pawn}{call pawn(pawn)/}{/if}</span></div></div>
+    <div class='square-content ${pawn.color}'><div class='pawn pawn-${pawn.color}{if pawn.king}-king{else/}-${pawn.number}{/if}{if data.display.horizontalBoard} rotated{/if}'><span>{if pawn}{call pawn(pawn)/}{/if}</span></div></div>
   {/if}
   {/macro}
 
   {macro pawn(pawn)}
-   {if pawn.king}<span class='kingmove'>${pawn.number}</span>{/if}<img style='width:100%;' src='game/ressources/{if data.display.horizontalBoard}hori{else/}vert{/if}/${pawn.color}/${pawn.color}{if pawn.king}king{else/}${pawn.number}{/if}{if data.display.horizontalBoard}-hor{/if}.svg'
-   alt='${pawn.number} ${pawn.color} {if pawn.king}Shogun{/if}' title='${pawn.number} ${pawn.color} {if pawn.king}Shogun{/if}' />
+   {if pawn.king}<span class='kingmove'>${pawn.number}</span>{/if}
   {/macro}
 
   {macro header()}
-      <div class='content{if data.display.horizontalBoard}-rotated{/if}'><img style='display: block;margin-left: auto;margin-right: auto;width:{if data.display.horizontalBoard}30{else/}100{/if}%' src='game/ressources/shogun.png' alt='Shogun' title='Shogun'></div>
+      <div class='content{if data.display.horizontalBoard} rotated{/if}'><img class='logo{if data.display.horizontalBoard} rotated{/if}' src='game/ressources/shogun.png' alt='Shogun' title='Shogun'></div>
   {/macro}
 
   {macro footer(game)}
-    <div class='content{if data.display.horizontalBoard}-rotated{/if}'>
+    <div class='content{if data.display.horizontalBoard} rotated{/if}'>
     {call colorSection(game,"blue","right")/}<i alt='{if data.display.horizontalBoard}${res.displayAction.boardhorizontal}{else /}${res.displayAction.boardvertical}{/if}' title='{if data.display.horizontalBoard}${res.displayAction.boardhorizontal}{else /}${res.displayAction.boardvertical}{/if}' style='cursor:pointer' class="fa fa-{if data.display.horizontalBoard}undo{else /}repeat{/if}" {on click rotate/}></i>
     {call colorSection(game,"green","left")/} {section {
                 macro : {

@@ -1,0 +1,48 @@
+{CSSTemplate {
+   $classpath: "game.css.PawnStyle"
+}}
+
+{macro main()}
+
+{call color("blue")/}
+{call color("green")/}
+
+.pawn {
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+}
+
+{/macro}
+
+{macro color(color)}
+{for var number = 1; number < 5; number++}
+  {call background(color,number,false)/}
+{/for}
+{for var number = 1; number < 2; number++}
+  {call background(color,number,true)/}
+{/for}
+{/macro}
+
+{macro background(color,number,king)}
+.pawn-${color}{if king}-king{else/}-${number}{/if} {
+  {call url(color,number,king,true)/}
+}
+.pawn-${color}{if king}-king{else/}-${number}{/if}.rotated {
+  {call url(color,number,king,false)/}
+}
+@media (orientation:landscape) {
+  .pawn-${color}{if king}-king{else/}-${number}{/if}.rotated {
+  {call url(color,number,king,true)/}
+}
+.pawn-${color}{if king}-king{else/}-${number}{/if} {
+  {call url(color,number,king,false)/}
+}
+}
+{/macro}
+
+{macro url(color,number,king,vert)}
+  background-image:url(/shogun/game/ressources/{if vert}vert{else/}hori{/if}/${color}/${color}{if king}king{else/}${number}{/if}{if !vert}-hor{/if}.svg);
+{/macro}
+
+
+{/CSSTemplate}

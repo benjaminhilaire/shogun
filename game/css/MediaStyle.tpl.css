@@ -1,0 +1,74 @@
+{CSSTemplate {
+   $classpath: "game.css.MediaStyle"
+}}
+
+{macro main()}
+
+{var maxWidth=500/}
+{var maxWidthRotated=800/}
+
+{var widthLogo=80/}
+{var widthLogoRotated=50/}
+{var paddingBefore=140/}
+{var paddingBeforeRotated=80/}
+
+.logo{
+display: block;
+margin-left: auto;
+margin-right: auto;
+width:${widthLogo}%;
+}
+.logo.rotated{
+width:${widthLogoRotated}%;
+}
+
+.content {
+  margin-left: 5%;
+  max-width: ${maxWidth}px;
+  width: 90%;
+}
+
+.square-box {
+  position: relative;
+  width: 12.5%;
+  overflow: hidden;
+  float: left;
+}
+
+.square-box:before {
+  content: "";
+  display: block;
+  padding-top: ${paddingBefore}%;
+}
+
+.content.rotated {
+  max-width: ${maxWidthRotated}px;
+}
+.square-box.rotated:before {
+  padding-top:${paddingBeforeRotated}%;
+}
+
+@media (orientation:landscape) {
+	.content.rotated {
+	  max-width: ${maxWidth}px;
+	}
+	.square-box.rotated:before {
+	  padding-top: ${paddingBefore}%;
+	}
+	.content {
+	  max-width: ${maxWidthRotated}px;
+	}
+	.square-box:before {
+	  padding-top:${paddingBeforeRotated}%;
+	}
+	.logo.rotated{
+	width:${widthLogo}%;
+	}
+	.logo{
+	width:${widthLogoRotated}%;
+	}
+}
+
+{/macro}
+
+{/CSSTemplate}
