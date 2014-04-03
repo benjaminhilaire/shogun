@@ -4,27 +4,13 @@
 
 {macro main()}
 
-{var maxWidth=500/}
-{var maxWidthRotated=800/}
-
-{var widthLogo=80/}
-{var widthLogoRotated=50/}
-{var paddingBefore=140/}
-{var paddingBeforeRotated=80/}
-
 .logo{
 display: block;
 margin-left: auto;
 margin-right: auto;
-width:${widthLogo}%;
 }
-.logo.rotated{
-width:${widthLogoRotated}%;
-}
-
 .content {
   margin-left: 5%;
-  max-width: ${maxWidth}px;
   width: 90%;
 }
 
@@ -38,35 +24,63 @@ width:${widthLogoRotated}%;
 .square-box:before {
   content: "";
   display: block;
-  padding-top: ${paddingBefore}%;
 }
 
-.content.rotated {
-  max-width: ${maxWidthRotated}px;
-}
-.square-box.rotated:before {
-  padding-top:${paddingBeforeRotated}%;
-}
+{call mediaOriented(true,true)/}
+{call mediaOriented(false,true)/}
+{call mediaOriented(true,false)/}
+{call mediaOriented(false,false)/}
 
-@media (orientation:landscape) {
-	.content.rotated {
-	  max-width: ${maxWidth}px;
-	}
-	.square-box.rotated:before {
-	  padding-top: ${paddingBefore}%;
-	}
-	.content {
-	  max-width: ${maxWidthRotated}px;
-	}
-	.square-box:before {
-	  padding-top:${paddingBeforeRotated}%;
-	}
-	.logo.rotated{
-	width:${widthLogo}%;
-	}
-	.logo{
-	width:${widthLogoRotated}%;
-	}
+{/macro}
+
+{macro mediaOriented(vertical,big)}
+
+{var paddingBefore=140/}
+{var paddingBeforeRotated=80/}
+
+{if big}
+  {var sizeCondition="min-device-width:800px"/}
+  {var maxWidth=500/}
+	{var maxWidthRotated=800/}
+	{var widthLogo=80/}
+	{var widthLogoRotated=50/}
+{else/}
+  {var sizeCondition="max-device-width:800px"/}
+  {var maxWidth=300/}
+	{var maxWidthRotated=350/}
+	{var widthLogo=50/}
+	{var widthLogoRotated=30/}
+{/if}
+
+{if vertical}
+  {var orientation = ".rotated"/}
+  {var otherOrientation = ""/}
+  {var query = "portrait"/}
+{else/}
+  {var orientation = ""/}
+  {var otherOrientation = ".rotated"/}
+  {var query = "landscape"/}
+{/if}
+
+@media (orientation:${query}) and (${sizeCondition}) {
+  .content${otherOrientation} {
+    max-width: ${maxWidth}px;
+  }
+  .content${orientation}{
+    max-width: ${maxWidthRotated}px;
+  }
+  .square-box${otherOrientation}:before {
+    padding-top: ${paddingBefore}%;
+  }
+  .square-box:before${orientation}{
+    padding-top:${paddingBeforeRotated}%;
+  }
+  .logo${otherOrientation}{
+  width:${widthLogo}%;
+  }
+  .logo${orientation}{
+  width:${widthLogoRotated}%;
+  }
 }
 
 {/macro}
