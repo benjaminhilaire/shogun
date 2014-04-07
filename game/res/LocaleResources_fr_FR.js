@@ -1,4 +1,4 @@
-Aria.resourcesDefinition({
+﻿Aria.resourcesDefinition({
     $classpath : 'game.res.LocaleResources',
     $resources : {
         "color" : {
@@ -15,14 +15,14 @@ Aria.resourcesDefinition({
         },
         "winner" : {
         	"winnerIs":"Le gagnant est",
-        	"congrats":"F&eacute;licitation",
+        	"congrats":"Félicitation",
         	"title":"Victoire"
         },
         "displayAction" : {
-        	"tilehorizontal":"Tuile &agrave; l&apos;horizontale",
-        	"tilevertical":"Tuile &agrave; la verticale",
-        	"boardhorizontal":"Tourner le plateau &agrave; l&apos;horizontal",
-        	"boardvertical":"Tourner le plateau &agrave; la verticale"
+        	"tilehorizontal":"Tuile à l'horizontale",
+        	"tilevertical":"Tuile à la verticale",
+        	"boardhorizontal":"Tourner le plateau à l'horizontal",
+        	"boardvertical":"Tourner le plateau à la verticale"
         }
     }
 });
