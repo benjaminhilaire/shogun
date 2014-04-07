@@ -115,7 +115,7 @@
   {/macro}
 
   {macro endContent()}
-      ${res.winner.winnerIs}...${res.color[data[data.mode].winner]}. ${res.winner.congrats} !
+      <p>${res.winner.winnerIs}...${res.color[data[data.mode].winner]}. ${res.winner.congrats} !</p>
   {/macro}
 
   {macro colorSection(game,color,float)}
