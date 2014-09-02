@@ -141,8 +141,12 @@
   {/macro}
 
   {macro tutorial(tutorial)}
-      <div class='step'>{if tutorial.step > 1}<i class="fa fa-chevron-circle-left" {on click {fn : this.updateStep,scope : this,args : [-1]}/}></i>{/if}<span>${res.tutorial.step} ${tutorial.step}</span>{if tutorial.step < tutorial.nbstep}<i {on click {fn : this.updateStep,scope : this,args : [1]}/} class="fa fa-chevron-circle-right"></i>{/if}</div>
-      ${res.tutorial["step"+tutorial.step]}
+      <div class='step'>{if tutorial.step > 1}<i class="fa fa-chevron-circle-left" {on click {fn : this.updateStep,scope : this,args : [-1]}/}></i>{/if}
+      <span>${res.tutorial.step} ${tutorial.step}</span>
+      {if tutorial.step < tutorial.nbstep}<i {on click {fn : this.updateStep,scope : this,args : [1]}/} class="fa fa-chevron-circle-right"></i>{/if}</div>
+      {foreach txt inArray res.tutorial["step"+tutorial.step]}
+              <p>${txt}</p>
+      {/foreach}
   {/macro}
 
   {macro switchDisposition(game)}

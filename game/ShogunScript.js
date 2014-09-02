@@ -187,9 +187,8 @@ Aria.tplScriptDefinition({
 					return false;
 				},
 				updateStep:function(evt,args){
-					var data = this.__getCurrentData();
-					var oldStep = data.tutorial.step;
-					this.$json.setValue(data.tutorial,
+					var oldStep = this.data.tutorial.step;
+					this.$json.setValue(this.data.tutorial,
 							"step", oldStep+args[0]);
 				},
 				rotate:function(evt,args){

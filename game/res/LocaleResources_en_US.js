@@ -7,11 +7,11 @@ Aria.resourcesDefinition({
         },
         "tutorial" : {
         	"step" : "Step",
-        	"step1" : "Welcome to the shogun tutorial.",
-        	"step2" : "Second step.",
-        	"step3" : "Third step.",
-        	"step4" : "Fourth step.",
-        	"step5" : "Fifth step."
+        	"step1" : ["Welcome to the shogun tutorial."],
+        	"step2" : ["Second step."],
+        	"step3" : ["Third step."],
+        	"step4" : ["Fourth step."],
+        	"step5" : ["Fifth step."]
         },
         "winner" : {
         	"winnerIs":"The winner is",
